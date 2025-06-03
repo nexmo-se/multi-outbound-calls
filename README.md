@@ -49,15 +49,6 @@ If you plan to test using `Local deployment with ngrok` (Internet tunneling serv
 
 Reminder: The Node.js server application (this repository) is running on local port 8000.</br>
 
-### Non local deployment
-
-If you are using hosted servers, for example Heroku, your own servers, or some other cloud provider,
-you will need the public hostnames and if necessary public ports of the servers that
-run this server application (from this repository), e.g.</br>
-	*`myappname.herokuapp.com`, `myserver.mycompany.com:40000`*</br>
-
-For Heroku deployment, see more details in the next section **Command Line Heroku deployment**.
-
 ### Set up your Vonage Voice API application credentials and phone number
 
 [Log in to your](https://ui.idp.vonage.com/ui/auth/login) or [sign up for a](https://ui.idp.vonage.com/ui/auth/registration) Vonage API account.
@@ -70,13 +61,9 @@ Enable Voice
 - Under Answer URL, leave HTTP GET, and enter https://\<host\>:\<port\>/voice/answer (replace \<host\> and \<port\> with the public host name and if necessary public port of the server where this sample application is running), e.g.</br>
 *https://yyyyyyyy.ngrok.io/voice/answer*</br>
 or
-*https://myappname.herokuapp.com/voice/answer*</br>
-or
 *https://myserver2.mycompany.com:40000/voice/answer*</br>
 - Under Event URL, **select** **_HTTP POST_**, and enter https://\<host\>:\<port\>/voice/event (replace \<host\> and \<port\> with the public host name and if necessary public port of the server where this sample application is running), e.g.</br>
 *https://yyyyyyyy.ngrok.io/voice/event*</br>
-or
-*https://myappname.herokuapp.com/voice/event*</br>
 or
 *https://myserver2.mycompany.com:40000/voice/event*</br>
 
@@ -118,8 +105,6 @@ https://myserver-address/client.html</br>
 
 e.g.</br>
 https://xxxxxx.ngrok.io/client.html</br>
-or</br>
-https://myappname.herokuapp.com/client.html</br>
 or</br>
 https://myserver.mycompany.com:40000/client.html</br>
 
