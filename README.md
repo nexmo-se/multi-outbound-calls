@@ -132,7 +132,7 @@ You are ready to:</br>
 
 Call in to the phone number listed as  **`SERVICE_NUMBER`** in .env file.</br>
 It will ring the endpoints listed as Group 1 in .env file,</br>
-first one to answers get connected to the incoming call,</br>
+first one to answer gets connected to the incoming call,</br>
 all other endpoints stop ringing.
 
 
