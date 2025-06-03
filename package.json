@@ -1,0 +1,19 @@
+{
+  "name": "multi-outbound-calls",
+  "version": "1.0.0",
+  "description": "This repository includes a sample WebRTC client code in JavaScript using Vonage Client SDK, as well as the corresponding sample server code.",
+  "main": "multi-outbound-call.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tony Chan",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@vonage/server-sdk": "^3.20.1",
+    "axios": "^1.9.0",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "request": "^2.88.2"
+  }
+}
