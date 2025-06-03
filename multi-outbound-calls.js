@@ -249,8 +249,6 @@ app.get('/answer', (req, res) => {
     
     }
 
-    console.log("+++++ zone 1:", multiCall[uuid]["from"]);
-
     //-
 
     nccoResponse = [
