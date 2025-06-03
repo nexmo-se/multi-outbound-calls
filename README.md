@@ -98,56 +98,14 @@ For the next steps, you will need:</br>
 
 Copy or rename env-example to .env<br>
 Update parameters in .env file<br>
+
+For a sample multi-call example,
+update the phone numbers in "Sample Call Group number 1".
+
 Have Node.js installed on your system, this application has been tested with Node.js version 18.19.1<br>
 Install node modules with the command "npm install"<br>
-Start the server application with the command "node multi-outbound-call"<br>
+Start the server application with the command "node multi-outbound-calls"<br>
 This Node.js server application (this repository) is running on local port 8000.</br>
-
-### Command Line Heroku deployment
-
-You must first have deployed your application locally, as explained in previous section, and verified it is working.
-
-Install [git](https://git-scm.com/downloads).
-
-Install [Heroku command line](https://devcenter.heroku.com/categories/command-line) and login to your Heroku account.
-
-If you do not yet have a local git repository, create one:</br>
-```bash
-git init
-git add .
-git commit -am "initial"
-```
-
-Start by creating this application on Heroku from the command line using the Heroku CLI:
-*Note: In following command, replace "myappname" with a unique name on the whole Heroku platform*
-
-```bash
-heroku create myappname
-```
-
-On your Heroku dashboard where your application page is shown, click on `Settings` button,
-add the following `Config Vars` and set them with their respective values:</br>
-API_KEY</br>
-API_SECRET</br>
-APP_ID</br>
-SERVICE_NUMBER</br>
-API_REGION</br>
-CLIENT_SDK_USERS</br>
-
-Now, deploy the application:
-
-
-```bash
-git push heroku master
-```
-
-On your Heroku dashboard where your application page is shown, click on `Open App` button, that hostname is the one to be used under your corresponding [Vonage Voice API application Capabilities](https://dashboard.nexmo.com/applications) (click on your application, then [Edit]).</br>
-
-For example, the respective links would be (replace *myappname* with actual value):</br>
-https://myappname.herokuapp.com/voice/answer</br>
-https://myappname.herokuapp.com/voice/event</br>
-
-See more details in above section **Set up your Vonage Voice API application credentials and phone number**.
 
 
 ## WebRTC client
@@ -169,6 +127,13 @@ You are ready to:</br>
 - Receive PSTN calls,</br>
 - Make PSTN calls,</br>
 - Receive or place a call to/from another WebRTC client (opened from the same link - logged in as a different user).</br>
+
+## Test multi-calls
+
+Call in to the phone number listed as  **`SERVICE_NUMBER`** in .env file.</br>
+It will ring the endpoints listed as Group 1 in .env file,</br>
+first one to answers get connected to the incoming call,</br>
+all other endpoints stop ringing.
 
 
 
