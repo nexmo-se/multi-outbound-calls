@@ -292,8 +292,6 @@ app.post('/event', (req, res) => {
 
         const destination = obj.destination;
 
-        console.log('++++++++++', obj.type, obj.destination);
-
         switch (obj.type) {
 
           case "phone":
@@ -328,8 +326,6 @@ app.post('/event', (req, res) => {
           case "app":
 
             setTimeout( () => {
-
-              console.log("+++++ zone 2:", multiCall[uuid]["from"]);
 
               const accessToken = tokenGenerate(appId, privateKey, {});
 
