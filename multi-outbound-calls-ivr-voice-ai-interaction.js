@@ -486,8 +486,6 @@ app.post('/event', async(req, res) => {
 
     let timerSeq = 0;
 
-    let allCallsInGroupMade = false;
-
     callGroup1.forEach(obj => {
 
       // add to "callsToMake" Set

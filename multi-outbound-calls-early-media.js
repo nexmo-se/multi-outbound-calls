@@ -292,7 +292,7 @@ const callsToMake = new Set();
 // const host1 = 'https://xxxxx.ngrok.io';
 // const uuid = '12345';
 
-// callGroup0.forEach(obj => {
+// callGroup1.forEach(obj => {
 
 //   // add to "callsToMake" set
 //   // callsToMake.add({host, type, to, from, peeruuid});
