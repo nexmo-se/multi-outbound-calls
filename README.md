@@ -15,14 +15,14 @@ First variant:
 - For the caller, call duration timer starts only when a callee answers, in other words the caller's phone shows that the call is "answered" only when a callee answers the call,
 - If noone answers after the ring time out, the ringing incoming call is terminated, and all callees stop ringing too,
 - This variant is also known as "Early media",
-- This variant is handled by the sample server code "multi-outbound-calls-early-media.js"
+- This variant is handled by the sample server code `multi-outbound-calls-early-media.js`.
 
 Second variant:
 - There is IVR or Voice AI interaction for the caller,
 - For the caller, call duration timer starts when the IVR or the Voice AI answers the call, in other words the caller's phone shows that the call is "answered" from the get go so the caller can interact with an IVR or Voice AI,
 - Then if a call transfer to a live agent is needed, multiple PSTN and/or WebRTC users are called, the first one to answer gets connected to the caller, all other callees stop ringing,
 - If noone answers after the ring time out, the ringing incoming call is terminated, and all callees stop ringing too,
-- This variant is handled by the sample server code "multi-outbound-calls-ivr-voice-ai-interaction.js"
+- This variant is handled by the sample server code `multi-outbound-calls-ivr-voice-ai-interaction.js`.
 
 ## Set up
 
@@ -102,37 +102,37 @@ Copy or rename env-example to .env<br>
 Update parameters in .env file<br>
 
 There are two sample multi-call groups, both server variants use the "Sample Call Group number 1", you may update that group in .env file for your initial tests.<br>
-You may add/remove "phone" (PSTN phone number), "app" (WebRTC, client SDK user name), "sip" (SIP URI) type endpoints.<br>
+You may add/remove `phone` (PSTN phone number), or `app` (WebRTC, client SDK user name) type endpoints in a given group.<br>
 
-For the multi-call groups, e.g. multi-call group 1, to match what is in the .env file,<br>
+For a given multi-call group, e.g. multi-call group 1, to match what is in the .env file,<br>
 
-for the first variant, update accordingly in the program file multi-outbound-calls-early-media.js, see:<br>
+for the first variant, update accordingly in the program file `multi-outbound-calls-early-media.js`, see:<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media.js#L145-L158<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media.js#L357-L362<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media.js#L451-L452<br>
 
-or for the second variant, update accordingly in the program file multi-outbound-calls-ivr-voice-ai-interaction.js, see:<br>
+or for the second variant, update accordingly in the program file `multi-outbound-calls-ivr-voice-ai-interaction.js`, see:<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-ivr-voice-ai-interaction.js#L146-L159<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-ivr-voice-ai-interaction.js#L359-L364<br>
-https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-ivr-voice-ai-interaction.js#L491
+https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-ivr-voice-ai-interaction.js#L489-L490<br>
 
-
-
-
-
-
-you may update that group for your initial tests.
+you may update that group 1 for your initial tests.
 
 In actual production, the list of PSTN and/or WebRTC endpoints may come from your own database depending on the time of the day, on the availability of live attendants, and other business factors you may have.
 
-
-
+Update other parameters in .env file accordingly.
 
 Have Node.js installed on your system, this application has been tested with Node.js version 18.19.1<br>
-Install node modules with the command "npm install"<br>
-Start the server application with the command "node multi-outbound-calls"<br>
-This Node.js server application (this repository) is running on local port 8000.</br>
 
+
+Install node modules with the command `npm install`<br>
+
+Start the server application with either the command<br>
+`multi-outbound-calls-early-media.js` (first variant)<br>
+or <br>
+`multi-outbound-calls-ivr-voice-ai-interaction.js (second variant)`
+
+Either of these Node.js server applications (in this repository) is running on local port 8000.</br>
 
 ## WebRTC client
 
@@ -149,7 +149,7 @@ https://myserver.mycompany.com:40000/client.html</br>
 
 You are ready to:</br>
 - Receive PSTN calls,</br>
-- Make PSTN calls,</br>
+- Make PSTN calls from a WebRTC client,</br>
 - Receive or place a call to/from another WebRTC client (opened from the same link - logged in as a different user).</br>
 
 ## Test multi-calls

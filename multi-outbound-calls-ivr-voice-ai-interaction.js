@@ -486,6 +486,7 @@ app.post('/event', async(req, res) => {
 
     let timerSeq = 0;
 
+    //- start multi-call - using Group 1 as example
     callGroup1.forEach(obj => {
 
       // add to "callsToMake" Set
