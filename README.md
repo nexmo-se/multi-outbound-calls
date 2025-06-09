@@ -21,7 +21,7 @@ Second variant:
 - There is IVR or Voice AI interaction for the caller,
 - For the caller, call duration timer starts when the IVR or the Voice AI answers the call, in other words the caller's phone shows that the call is "answered" from the get go so the caller can interact with an IVR or Voice AI,
 - Then if a call transfer to a live agent is needed, multiple PSTN and/or WebRTC users are called, the first one to answer gets connected to the caller, all other callees stop ringing,
-- If noone answers after the ring time out, the ringing incoming call is terminated, and all callees stop ringing too,
+- If noone answers after the ring time out, the established incoming call is terminated, and all callees stop ringing,
 - This variant is handled by the sample server code `multi-outbound-calls-ivr-voice-ai-interaction.js`.
 
 ## Set up
