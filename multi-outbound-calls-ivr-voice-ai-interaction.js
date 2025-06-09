@@ -62,7 +62,7 @@ const privateKey = fs.readFileSync('./.private.key');
 
 const { tokenGenerate } = require('@vonage/jwt');
 
-//-- Multi-call parameters and dictionary --
+//-- Multi-call parameters --
 
 const cps = Number(process.env.CPS);
 const addedDelay = Number(process.env.ADDED_DELAY);
@@ -70,8 +70,13 @@ const backOffTimer = Number(process.env.BACK_OFF_TIMER);
 
 const interCallInterval = Math.ceil(1000 / cps) + addedDelay; // in ms
 
+const maxRingDuration = Math.min( Number(process.env.MAX_RING_DURATION), 60 ); // 60 sec max
+
+//-- Multi-call dictionary --
 
 let multiCall = {};
+
+//--
 
 function addToMultiCall(info) {
 
@@ -138,71 +143,6 @@ const clientsArray = Array.from(clients);
 
 //---- Sample call groups -----
 
-const callGroup0 = [
-  {
-    type: process.env.ENDPOINT00_TYPE,
-    destination: process.env.ENDPOINT00_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT01_TYPE,
-    destination: process.env.ENDPOINT01_DESTINATION
-  },
-  // {
-  //   type: process.env.ENDPOINT02_TYPE,
-  //   destination: process.env.ENDPOINT02_DESTINATION
-  // },
-  {
-    type: process.env.ENDPOINT03_TYPE,
-    destination: process.env.ENDPOINT03_DESTINATION
-  },
-  // {
-  //   type: process.env.ENDPOINT04_TYPE,
-  //   destination: process.env.ENDPOINT04_DESTINATION
-  // },
-  {
-    type: process.env.ENDPOINT05_TYPE,
-    destination: process.env.ENDPOINT05_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT06_TYPE,
-    destination: process.env.ENDPOINT06_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT07_TYPE,
-    destination: process.env.ENDPOINT07_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT08_TYPE,
-    destination: process.env.ENDPOINT08_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT09_TYPE,
-    destination: process.env.ENDPOINT09_DESTINATION
-  },
-    {
-    type: process.env.ENDPOINT0a_TYPE,
-    destination: process.env.ENDPOINT0a_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT0b_TYPE,
-    destination: process.env.ENDPOINT0b_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT0c_TYPE,
-    destination: process.env.ENDPOINT0c_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT0d_TYPE,
-    destination: process.env.ENDPOINT0d_DESTINATION
-  },
-  {
-    type: process.env.ENDPOINT0e_TYPE,
-    destination: process.env.ENDPOINT0e_DESTINATION
-  }
-]; 
-
-//--
-
 const callGroup1 = [
   {
     type: process.env.ENDPOINT11_TYPE,
@@ -263,7 +203,7 @@ const callPhone = async(host, type, to, from, peerUuid) => {
           number: from
           // number: toString(multiCall[peerUuid]["from"])
         },
-        ringing_timer: 45,
+        ringing_timer: maxRingDuration,
         answer_url: ['https://' + host + '/answer_multi?peer_uuid=' + peerUuid],
         answer_method: 'GET',
         event_url: ['https://' + host + '/event_multi?peer_uuid=' + peerUuid + '&in_app=false'],
@@ -309,7 +249,7 @@ const callPhone = async(host, type, to, from, peerUuid) => {
             // type: 'app',
             // user: 'sarah'
           },
-          ringing_timer: 45,
+          ringing_timer: maxRingDuration,
           answer_url: ['https://' + host + '/answer_multi?peer_uuid=' + peerUuid],
           answer_method: 'GET',
           event_url: ['https://' + host + '/event_multi?peer_uuid=' + peerUuid + '&in_app=true'],
@@ -352,7 +292,7 @@ const callsToMake = new Set();
 // const host1 = 'https://xxxxx.ngrok.io';
 // const uuid = '12345';
 
-// callGroup0.forEach(obj => {
+// callGroup1.forEach(obj => {
 
 //   // add to "callsToMake" set
 //   // callsToMake.add({host, type, to, from, peeruuid});
@@ -535,21 +475,64 @@ app.post('/event', async(req, res) => {
 
   if (req.body.type == "transfer") {  // incoming call has been effectively added to the named conference
 
-      //>>>>> Initiate multi-calls >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      //-- for demo purposes, we call set of endpoints in call group 1
+    // This is a placeholder Music on Hold audio file
+    // you ** MUST ** use a Music on Hold audio file you have license or legal usage rights
+    vonage.voice.streamAudio(uuid, 'https://ccrma.stanford.edu/~jos/mp3/pno-cs.mp3')
+      .then(res => console.log("Play MoH on:", uuid, res))
+      .catch(err => console.error("Failed to play MoH on:", uuid, err));
 
-      let timerSeq = 0;
+    //>>>>> Initiate multi-calls >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //-- for demo purposes, we call set of endpoints in call group 1
 
-      let allCallsInGroupMade = false;
+    let timerSeq = 0;
 
-      callGroup1.forEach(obj => {
+    let allCallsInGroupMade = false;
 
-        // add to "callsToMake" Set
-        callsToMake.add({'host': hostName, 'type': obj.type, 'destination': obj.destination, 'source': serviceNumber, 'peer': uuid});
-      
-      });
+    callGroup1.forEach(obj => {
+
+      // add to "callsToMake" Set
+      callsToMake.add({'host': hostName, 'type': obj.type, 'destination': obj.destination, 'source': serviceNumber, 'peer': uuid});
+    
+    });
+
+    //- check after ring time out if any callee has answered, if not terminate this incoming call
+    setTimeout( () => {
+
+      console.log(">>> zone 01");
+
+      if ( multiCall.hasOwnProperty(uuid) && multiCall[uuid].hasOwnProperty("answered") ) {
+
+        if (!multiCall[uuid]["answered"]) {
+
+          // stop MoH
+          vonage.voice.stopStreamAudio(uuid);
+
+          // play announcement
+          vonage.voice.playTTS(uuid,  
+            {
+            text: 'Noone is available to take your call, please try again later',
+            language: 'en-US', 
+            style: 11
+            })
+            .then(res => console.log("Play TTS on:", uuid, res))
+            .catch(err => console.error("Failed to play TTS on:", uuid, err));
+
+          // terminate incoming call
+          setTimeout( () => {
+
+            vonage.voice.hangupCall(uuid)
+              .then(res => console.log(">>> No call answer - Terminating inbound leg", uuid))
+              .catch(err => null) // Inbound leg has already terminated
+          
+          }, 4000); // set to duration of above TTS
+
+        }
+
+      }
+
+    }, maxRingDuration * 1000 + 3000); // 3000 ms margin to avoid race condition
+
   }
-
 
   //-- incoming call ended?
   if (req.body.status == 'completed' &&  multiCall.hasOwnProperty(uuid)) {
@@ -738,20 +721,26 @@ app.post('/event_multi', (req, res) => {
 
   res.status(200).send('Ok');
 
+  const peerUuid = req.query.peer_uuid;
+
   //-- add the in-app leg uuid to the list of calls related to the peer incoming call uuid
 
   if ( req.query.in_app == "true" && (req.body.status == 'started' || req.body.status == 'ringing') ) {
-
-    addToMultiCall([req.query.peer_uuid, req.body.uuid]);
-
+    addToMultiCall([peerUuid, req.body.uuid]);
   }
+
+  //-- 
+
+  if (req.body.type == "transfer") {  // answered outbound call effectively attached to conference
+    // stop MoH to inbound call
+    console.log('>>>>>>> zone 02');
+    vonage.voice.stopStreamAudio(peerUuid);
+  }  
 
   //-- remove self from list of multi-call uuids
 
   if (req.body.status == "completed") {
-
-    removeFromMultiCall([req.query.peer_uuid, req.body.uuid]);
-
+    removeFromMultiCall([peerUuid, req.body.uuid]);
   }  
   
 });

@@ -487,8 +487,7 @@ app.get('/answer', async(req, res) => {
 
       }
 
-
-    }, maxRingDuration * 1000);
+    }, maxRingDuration * 1000 + 3000); // 3000 ms margin to avoid race condition
 
   };  
 
