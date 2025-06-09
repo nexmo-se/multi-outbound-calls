@@ -505,21 +505,21 @@ app.post('/event', async(req, res) => {
   if (req.body.status == 'completed' &&  multiCall.hasOwnProperty(uuid)) {
 
     // terminate all pending peer outbound calls
-    for (const outboudLegUuid of multiCall[uuid]["legs"]) {
+    for (const outboundLegUuid of multiCall[uuid]["legs"]) {
 
-      console.log("hang up outbound leg", outboudLegUuid);
+      console.log("hang up outbound leg", outboundLegUuid);
 
-      vonage.voice.getCall(outboudLegUuid)
+      vonage.voice.getCall(outboundLegUuid)
         .then(res => {
           if (res.status != 'completed') {
-            vonage.voice.hangupCall(outboudLegUuid)
-              .then(res => console.log(">>> Terminating outbound leg", outboudLegUuid))
+            vonage.voice.hangupCall(outboundLegUuid)
+              .then(res => console.log(">>> Terminating outbound leg", outboundLegUuid))
               .catch(err => null) // Outbound leg has already terminated
           }
          })
-        .catch(err => console.error(">>> error get call status of outbound leg ", outboudLegUuid, err))   
+        .catch(err => console.error(">>> error get call status of outbound leg ", outboundLegUuid, err))   
 
-      removeFromMultiCall([uuid, outboudLegUuid]);
+      removeFromMultiCall([uuid, outboundLegUuid]);
 
     }
 
@@ -583,23 +583,23 @@ app.get('/answer_multi', (req, res) => {
     }; 
 
     // terminate all other initiated calls
-    for (const outboudLegUuid of multiCall[peerUuid]["legs"]) {
+    for (const outboundLegUuid of multiCall[peerUuid]["legs"]) {
 
-      if (outboudLegUuid != req.query.uuid) { // don't terminate self
+      if (outboundLegUuid != req.query.uuid) { // don't terminate self
 
-        console.log("hang up outbound leg", outboudLegUuid);
+        console.log("hang up outbound leg", outboundLegUuid);
 
-        vonage.voice.getCall(outboudLegUuid)
+        vonage.voice.getCall(outboundLegUuid)
           .then(res => {
             if (res.status != 'completed') {
-              vonage.voice.hangupCall(outboudLegUuid)
-                .then(res => console.log(">>> Terminating outbound leg", outboudLegUuid))
+              vonage.voice.hangupCall(outboundLegUuid)
+                .then(res => console.log(">>> Terminating outbound leg", outboundLegUuid))
                 .catch(err => null) // Outbound leg has already terminated
             }
            })
-          .catch(err => console.error(">>> error get call status of outbound leg ", outboudLegUuid, err))   
+          .catch(err => console.error(">>> error get call status of outbound leg ", outboundLegUuid, err))   
 
-        removeFromMultiCall([peerUuid, outboudLegUuid]);
+        removeFromMultiCall([peerUuid, outboundLegUuid]);
 
       }  
 
