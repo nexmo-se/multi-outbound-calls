@@ -124,13 +124,12 @@ Update other parameters in .env file accordingly.
 
 Have Node.js installed on your system, this application has been tested with Node.js version 18.19.1<br>
 
-
 Install node modules with the command `npm install`<br>
 
 Start the server application with either the command<br>
-`multi-outbound-calls-early-media.js` (first variant)<br>
+`node multi-outbound-calls-early-media.js` (first variant)<br>
 or <br>
-`multi-outbound-calls-ivr-voice-ai-interaction.js (second variant)`
+`node multi-outbound-calls-ivr-voice-ai-interaction.js (second variant)`
 
 Either of these Node.js server applications (in this repository) is running on local port 8000.</br>
 
