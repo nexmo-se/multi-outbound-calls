@@ -497,8 +497,6 @@ app.post('/event', async(req, res) => {
     //- check after ring time out if any callee has answered, if not terminate this incoming call
     setTimeout( () => {
 
-      console.log(">>> zone 01");
-
       if ( multiCall.hasOwnProperty(uuid) && multiCall[uuid].hasOwnProperty("answered") ) {
 
         if (!multiCall[uuid]["answered"]) {
@@ -732,7 +730,6 @@ app.post('/event_multi', (req, res) => {
 
   if (req.body.type == "transfer") {  // answered outbound call effectively attached to conference
     // stop MoH to inbound call
-    console.log('>>>>>>> zone 02');
     vonage.voice.stopStreamAudio(peerUuid);
   }  
 
