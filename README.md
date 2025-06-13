@@ -134,7 +134,7 @@ Install node modules with the command `npm install`<br>
 Start the server application with either the command<br>
 `node multi-outbound-calls-early-media.js` (first variant)<br>
 or <br>
-`node multi-outbound-calls-ivr-voice-ai-interaction.js (second variant)`
+`node multi-outbound-calls-ivr-voice-ai-interaction.js (second variant)`<br>
 or <br>
 `node multi-outbound-calls-early-media-coach.js` (first variant with call whispering).<br>
 
