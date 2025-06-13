@@ -15,20 +15,23 @@ First variant:
 - For the caller, call duration timer starts only when a callee answers, in other words the caller's phone shows that the call is "answered" only when a callee answers the call,
 - If noone answers after the ring time out, the ringing incoming call is terminated, and all callees stop ringing too,
 - This variant is also known as "Early media",
-- This variant is handled by the sample server code `multi-outbound-calls-early-media.js`.
+- This variant is handled by the sample server code<br>
+`multi-outbound-calls-early-media.js`.
 
 Second variant:
 - There is IVR or Voice AI interaction for the caller,
 - For the caller, call duration timer starts when the IVR or the Voice AI answers the call, in other words the caller's phone shows that the call is "answered" from the get go so the caller can interact with an IVR or Voice AI,
 - Then if a call transfer to a live agent is needed, multiple PSTN and/or WebRTC users are called, the first one to answer gets connected to the caller, all other callees stop ringing,
 - If noone answers after the ring time out, the established incoming call is terminated, and all callees stop ringing,
-- This variant is handled by the sample server code `multi-outbound-calls-ivr-voice-ai-interaction.js`.
+- This variant is handled by the sample server code<br>
+`multi-outbound-calls-ivr-voice-ai-interaction.js`.
 
 First variant - With call whisper:
 - It has the same capabilities as described in "First variant" section above
 - Once the incoming call (e.g. customer call leg) is connected with an outgoing call (e.g. agent call leg), you may add a third call leg that can hear both the customer and the agent, and only the agent leg can hear audio from that third call leg, this is a.k.a. call whispering, or call coaching.
 - The third call leg may end at any time, while the first and second call legs stay connected.
-- This variant is handled by the sample server code `multi-outbound-calls-early-media-coach.js`.
+- This variant is handled by the sample server code<br>
+`multi-outbound-calls-early-media-coach.js`.
 
 ## Set up
 
