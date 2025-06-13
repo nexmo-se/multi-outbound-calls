@@ -24,6 +24,11 @@ Second variant:
 - If noone answers after the ring time out, the established incoming call is terminated, and all callees stop ringing,
 - This variant is handled by the sample server code `multi-outbound-calls-ivr-voice-ai-interaction.js`.
 
+First variant - With call whisper:
+- It has the same capabilities as described in "First variant" section above
+- Once the incoming call (e.g. customer call leg) is connected with an outgoing call (e.g. agent call leg), you may add a third leg that can hear the customer and the agent, and only the agent leg can hear audio from that third leg, this a.k.a. call whispering, or call coaching.
+- This variant is handled by the sample server code `multi-outbound-calls-early-media-coach.js`.
+
 ## Set up
 
 ### Local deployment using ngrok
@@ -73,11 +78,11 @@ Under **Capabilities** section (click on [Edit] if you do not see this section):
 
 Enable Voice
 - Under Answer URL, leave HTTP GET, and enter https://\<host\>:\<port\>/voice/answer (replace \<host\> and \<port\> with the public host name and if necessary public port of the server where this sample application is running), e.g.</br>
-*https://yyyyyyyy.ngrok.io/voice/answer*</br>
+*https://xxxxxx.ngrok.io/voice/answer*</br>
 or
 *https://myserver2.mycompany.com:40000/voice/answer*</br>
 - Under Event URL, **select** **_HTTP POST_**, and enter https://\<host\>:\<port\>/voice/event (replace \<host\> and \<port\> with the public host name and if necessary public port of the server where this sample application is running), e.g.</br>
-*https://yyyyyyyy.ngrok.io/voice/event*</br>
+*https://xxxxxx.ngrok.io/voice/event*</br>
 or
 *https://myserver2.mycompany.com:40000/voice/event*</br>
 
@@ -158,6 +163,19 @@ It will ring the endpoints listed as Group 1 in .env file,</br>
 first one to answer gets connected to the incoming call,</br>
 all other endpoints stop ringing.
 
+## Test call whispering
+
+Once an incoming call (1st participant, e.g. customer) is connected to an outgoing call (2nd participant, e.g. agent),
+connect a third call that can listen to both initial participants and do whispering to the second participant by accessing either of following URLs (via a web browser or programmatically with HTTP GET).
+
+To connect a PSTN listener/whisperer endpoint:
+`https://<server>/coachpstn?number=<number_to_call>&uuid=<2nd_participant_uuid>`
+e.g.
+`https://xxxxx.ngrok.io/coachpstn?number=12995550101&uuid=<bc26bafd-e361-4369-a3d7-4b85756ad70b`
 
 
+To connect a WebRTC (aka Client SDK) listener/whisperer endpoint:
+`https://<server>/coachapp?user=<client-sdk-user-name>&uuid=<2nd_participant_uuid>`
+e.g.
+`https://xxxxx.ngrok.io/coachapp?user=jennifer&uuid=<ad26bafd-e361-4369-a3d7-4b85756ad7fa`
 
