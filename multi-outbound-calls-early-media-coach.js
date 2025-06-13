@@ -699,8 +699,8 @@ app.get('/coachpstn', (req, res) => {
         if (value == uuid) {
           console.log(">>> Customer leg uuid:", key);
           console.log(">>> Agent leg uuid to whisper on:", value);
+          
           // initiate the PSTN call to coach here
-
           vonage.voice.createOutboundCall({
             to: [{
               type: 'phone',
@@ -714,7 +714,7 @@ app.get('/coachpstn', (req, res) => {
             answer_url: ['https://' + hostName + '/answer_coach?customer_uuid=' + key + '&agent_uuid=' + value],
             answer_method: 'GET',
             event_url: ['https://' + hostName + '/event_coach?customer_uuid=' + key + '&agent_uuid=' + value + '&in_app=false'],
-            event_method: 'POST',
+            event_method: 'POST'
           })
           .then(resp => {
             console.log(Date.now(), '\ncalling phone number', number, resp);
@@ -730,6 +730,79 @@ app.get('/coachpstn', (req, res) => {
               }
             }
           })
+
+        }
+
+      })
+  
+   }
+  
+  }
+  
+});
+
+//--------
+
+app.get('/coachapp', (req, res) => {
+
+  res.status(200).send('Ok');
+
+  const hostName = req.hostname;
+
+  const user = req.query.user;  // client SDK user to call (coach)
+  const uuid = req.query.uuid;  // agent's call uuid
+
+  console.log('>>> Coach user name:', user);
+  console.log('>>> Agent call uuid:', uuid);
+
+  // retrieve customer call uuid
+  console.log('>>> Established calls:');
+  for (const key in multiCall) {
+   
+    if (multiCall.hasOwnProperty(key)) {
+   
+      console.log(key, multiCall[key]);
+     
+      multiCall[key]["legs"].forEach(value => {
+
+        if (value == uuid) {
+          console.log(">>> Customer leg uuid:", key);
+          console.log(">>> Agent leg uuid to whisper on:", value);
+
+          // initiate the in-app call to coach here
+
+          const accessToken = tokenGenerate(appId, privateKey, {});
+
+          request.post('https://api.nexmo.com/v2/calls', {
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                "content-type": "application/json",
+            },
+            body: {
+              to: [{
+                type: "app",
+                user: user
+              }],
+              from: {
+                type: 'phone',
+                number: serviceNumber
+              },
+              answer_url: ['https://' + hostName + '/answer_coach?customer_uuid=' + key + '&agent_uuid=' + value],
+              answer_method: 'GET',
+              event_url: ['https://' + hostName + '/event_coach?customer_uuid=' + key + '&agent_uuid=' + value + '&in_app=true'],
+              event_method: 'POST'              
+              },
+              json: true  
+            }, function (error, response, body) {
+              if (error) {
+                // console.log(Date.now(), 'error calling client SDK', user, error.body, error.body.invalid_parameters)
+                 console.log(Date.now(), 'error calling client SDK', user, error)
+              }
+              else {
+                // console.log(Date.now(), 'calling client SDK', user, response);
+                console.log(Date.now(), '\ncalling client SDK', user);
+              }
+            });
 
         }
 
@@ -763,6 +836,14 @@ app.get('/answer_coach', (req, res) => {
 app.post('/event_coach', (req, res) => {
 
   res.status(200).send('Ok');
+
+  //-- add the in-app leg uuid to the list of calls related to the peer incoming call uuid
+
+  if ( req.query.in_app == "true" && (req.body.status == 'started' || req.body.status == 'ringing') ) {
+
+    addToMultiCall([req.query.customer_uuid, req.body.uuid]);
+
+  }
   
 });
 
