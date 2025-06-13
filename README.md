@@ -172,7 +172,7 @@ all other endpoints stop ringing.
 ## Test call whispering
 
 Once an incoming call (1st participant, e.g. customer) is connected to an outgoing call (2nd participant, e.g. agent),
-connect a 3rd participant that can listen to both initial participants and do whispering to the 2nd participant by accessing either of the following URLs (via a web browser or programmatically with HTTP GET).
+connect a 3rd participant (e.g. supervisor) that can listen to both initial participants and do whispering to the 2nd participant by accessing either of the following URLs (via a web browser or programmatically with HTTP GET).
 
 To connect a PSTN listener/whisperer endpoint:</br>
 `https://<server>/coachpstn?number=<number_to_call>&uuid=<2nd_participant_uuid>`</br></br>
