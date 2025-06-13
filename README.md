@@ -26,7 +26,8 @@ Second variant:
 
 First variant - With call whisper:
 - It has the same capabilities as described in "First variant" section above
-- Once the incoming call (e.g. customer call leg) is connected with an outgoing call (e.g. agent call leg), you may add a third leg that can hear the customer and the agent, and only the agent leg can hear audio from that third leg, this a.k.a. call whispering, or call coaching.
+- Once the incoming call (e.g. customer call leg) is connected with an outgoing call (e.g. agent call leg), you may add a third call leg that can hear both the customer and the agent, and only the agent leg can hear audio from that third call leg, this is a.k.a. call whispering, or call coaching.
+- The third call leg may end at any time, while the first and second call legs stay connected.
 - This variant is handled by the sample server code `multi-outbound-calls-early-media-coach.js`.
 
 ## Set up
