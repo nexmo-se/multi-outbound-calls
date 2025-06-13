@@ -168,14 +168,14 @@ all other endpoints stop ringing.
 Once an incoming call (1st participant, e.g. customer) is connected to an outgoing call (2nd participant, e.g. agent),
 connect a third call that can listen to both initial participants and do whispering to the second participant by accessing either of following URLs (via a web browser or programmatically with HTTP GET).
 
-To connect a PSTN listener/whisperer endpoint:
-`https://<server>/coachpstn?number=<number_to_call>&uuid=<2nd_participant_uuid>`
+To connect a PSTN listener/whisperer endpoint:</br>
+`https://<server>/coachpstn?number=<number_to_call>&uuid=<2nd_participant_uuid>`</br>
 e.g.
 `https://xxxxx.ngrok.io/coachpstn?number=12995550101&uuid=<bc26bafd-e361-4369-a3d7-4b85756ad70b`
 
 
-To connect a WebRTC (aka Client SDK) listener/whisperer endpoint:
-`https://<server>/coachapp?user=<client-sdk-user-name>&uuid=<2nd_participant_uuid>`
+To connect a WebRTC (aka Client SDK) listener/whisperer endpoint:</br>
+`https://<server>/coachapp?user=<client-sdk-user-name>&uuid=<2nd_participant_uuid>`</br>
 e.g.
 `https://xxxxx.ngrok.io/coachapp?user=jennifer&uuid=<ad26bafd-e361-4369-a3d7-4b85756ad7fa`
 
