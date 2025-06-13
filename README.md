@@ -115,15 +115,26 @@ You may add/remove `phone` (PSTN phone number), or `app` (WebRTC, client SDK use
 
 For a given multi-call group, e.g. multi-call group 1, to match what is in the .env file,<br>
 
-for the first variant, update accordingly in the program file `multi-outbound-calls-early-media.js`, see:<br>
+for the first variant, update accordingly the program file<br>
+`multi-outbound-calls-early-media.js`,<br>
+see:<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media.js#L145-L158<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media.js#L357-L362<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media.js#L451-L452<br>
 
-or for the second variant, update accordingly in the program file `multi-outbound-calls-ivr-voice-ai-interaction.js`, see:<br>
+for the second variant, update accordingly the program file<br>
+`multi-outbound-calls-ivr-voice-ai-interaction.js`,<br>
+see:<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-ivr-voice-ai-interaction.js#L146-L159<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-ivr-voice-ai-interaction.js#L359-L364<br>
 https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-ivr-voice-ai-interaction.js#L489-L490<br>
+
+for the first variant with call whisper, update accordingly the program file<br>
+`multi-outbound-calls-early-media-coach.js`,<br>
+see:<br>
+https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media-coach.js#L145-L158<br>
+https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media-coach.js#L357-L362<br>
+https://github.com/nexmo-se/multi-outbound-calls/blob/master/multi-outbound-calls-early-media-coach.js#L451-L452<br>
 
 you may update that group 1 for your initial tests.
 
