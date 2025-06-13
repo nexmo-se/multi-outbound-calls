@@ -135,6 +135,8 @@ Start the server application with either the command<br>
 `node multi-outbound-calls-early-media.js` (first variant)<br>
 or <br>
 `node multi-outbound-calls-ivr-voice-ai-interaction.js (second variant)`
+or <br>
+`node multi-outbound-calls-early-media-coach.js` (first variant with call whispering).<br>
 
 Either of these Node.js server applications (in this repository) is running on local port 8000.</br>
 
